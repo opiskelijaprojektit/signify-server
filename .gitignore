@@ -1,0 +1,5 @@
+# Ignore everything in public directory.
+# Except directories /public/admin/ and /public/api/.
+/public/*
+!/public/admin/
+!/public/api/
