@@ -241,6 +241,6 @@ $endpoints_auth["/scenes"] = function ($requestData): void {
 
   // Return JSON encoded array containing hash, latest 
   // modification time and scene data.
-  echo json_encode(array("hash"=>$hash, "updated"=>$lastUpdate, "scenes" => $result));
+  echo json_encode(array("hash"=>$hash, "updated"=>$lastUpdate, "scenes" => $result, "version" => VERSION));
   exit;
 };
