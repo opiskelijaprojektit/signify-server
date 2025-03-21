@@ -67,11 +67,37 @@ function getDeviceLists($deviceid) {
  *
  * @author Pekka Tapio Aalto
  *
+ * @param string $tag     Tag of the device.
+ * @return array          Device's data.
+ */
+function getDeviceWithTag($tag) {
+  return DB::run('SELECT * FROM signify_device WHERE tag =  ?;',[$tag])->fetch();
+}
+
+/**
+ * Gets data of the given device.
+ *
+ * @author Pekka Tapio Aalto
+ *
  * @param string $token   Authorization token.
  * @return array          Device's data.
  */
 function getDeviceWithToken($token) {
   return DB::run('SELECT * FROM signify_device WHERE token =  ?;',[$token])->fetch();
+}
+
+/**
+ * Links device updating device name and descr.
+ *
+ * @author Pekka Tapio Aalto
+ *
+ * @param int $iddevice   Id of the device.
+ * @param string $name    Name of the device.
+ * @param string $descr   Device description.
+ * @return int            Row count of the updated rows.
+ */
+function linkDevice($iddevice, $name, $descr) {
+  return DB::run('UPDATE signify_device SET name = ?, descr = ? WHERE id_device = ?', [$name, $descr, $iddevice])->rowCount();
 }
 
 /**

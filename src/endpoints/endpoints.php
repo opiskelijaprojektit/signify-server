@@ -27,6 +27,34 @@ $endpoints["/"] = function (array $requestData): void {
 };
 
 /**
+ * Links device as a demo device.
+ *
+ * Names device as a demo device and attach the demo list to
+ * the device.
+ */
+$endpoints["/demo"] = function (array $requestData): void {
+  // Check if tag is defined.
+  if (!isset($requestData["tag"])) {
+    echo json_encode("Tag was not defined. Verify the information sent.");
+    exit;
+  }
+  $tag = $requestData["tag"];
+  // Get the device data with tag and check that name field is not
+  // defined.
+  $device = getDeviceWithTag($tag);
+  if (is_null($device['name'])) {
+    // Device can be used as a demo device, so link device and
+    // attach demo list to it.
+    linkDevice($device["id_device"], "DEMO-" . strtoupper($tag), "Demo device");
+    addListToDevice($device["id_device"], 1);
+    echo json_encode("Device is linked as a demo device.");
+  } else {
+    echo json_encode("Device is already linked. Can't use it as a demo device.");
+    exit;
+  }
+};
+
+/**
  * Registers the device.
  * 
  * Generates tag and token for the device, stores them and clients 
