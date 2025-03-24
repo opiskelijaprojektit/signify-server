@@ -182,6 +182,25 @@ $endpoints_auth["/check"] = function ($requestData): void {
 };
 
 /**
+ * Get the the vulnerability RSS feed from the Kyberturvallisuuskeskus.
+ *
+ * Returns XML document containing latest vulnerability information.
+ * This endpoint acts as an proxy server.
+ *
+ * @param array $requestData Contains the parameters sent in the request.
+ * @return void
+ */
+$endpoints_auth["/scene-vulnerability"] = function ($requestData): void {
+  $url = "https://www.kyberturvallisuuskeskus.fi/sites/default/files/rss/vulns.xml";
+  if (($xml_data = file_get_contents($url))===false){
+    echo json_encode("Error fetching vulnerability data");
+  } else {
+    header("Content-Type: application/xml");
+    echo $xml_data;
+  }
+};
+
+/**
  * Get the scenes of the device. 
  * 
  * Returns array containing scene data array, returned datas latest 
